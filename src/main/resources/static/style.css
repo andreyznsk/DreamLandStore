@@ -1,0 +1,57 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    margin: auto 20%;
+}
+
+.title {
+    margin-top: 5rem;
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+
+.outer {
+    display: flex;
+    text-align: center;
+    border-bottom: 1px solid lightgrey;
+}
+
+.header {
+    border-bottom: 2px solid black;
+    font-style: italic;
+}
+
+.inner {
+    padding: 4px 0;
+    width: 10%;
+    border-right: 1px solid #000;
+}
+
+.inner:last-child {
+    border: none;
+}
+
+.item {
+    flex-grow: 4;
+}
+
+.btn {
+    cursor: pointer;
+
+}
+
+.btn a {
+    text-decoration: none;
+}
+
+.btn:hover {
+    background-color: lightpink;
+}
+
+.form {
+    margin-top: 2rem;
+}

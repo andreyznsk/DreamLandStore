@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Список продуктов</title>
+    <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
+</head>
+
+<body>
+<th:block th:insert="~{_template :: header}"/>
+
+<div class="container">
+
+    <h1>Управление пользователями</h1>
+    <div class="outer header">
+
+        <div class="inner">Имя</div>
+        <div class="inner">ID</div>
+
+    </div>
+    <div class="outer" th:each="myUser: ${myUsers}">
+        <div class="inner" th:text="${myUser.getUserName()}">Имя</div>
+        <div class="inner item" th:text="${myUser.id}">Enabled?</div>
+    </div>
+</div>
+
+
+<th:block th:insert="~{_template :: footer}"/>
+</body>
+</html>
