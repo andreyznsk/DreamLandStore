@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.Optional;
 
 @Controller
-@RequestMapping({"/product",""})
+@RequestMapping("/product")
 public class ProductController {
 
 

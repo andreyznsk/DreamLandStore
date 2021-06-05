@@ -19,13 +19,14 @@ import java.util.Date;
 @Controller
 public class UsersAuthController {
 
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserService userService;
 
     @GetMapping("/login")
     public String showUsers(Model model) {
-
-        model.addAttribute("user","Неизвестный странник");
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof User) {
+            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            model.addAttribute("user",user.getUsername() );
+        } else model.addAttribute("user",null );
         model.addAttribute("date", new Date());
         return "login";
     }
