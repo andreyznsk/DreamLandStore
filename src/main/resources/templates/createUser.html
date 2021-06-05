@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add new product</title>
+</head>
+
+<body>
+<div class="container">
+    <div th:if="${param.error}">
+        <div class="item">Invalid user name or password!</div>
+    </div>
+    <form class="form" name="f" th:action="@{/createUser}" th:object="${myUser}" method="post">
+        <table>
+            <tr>
+                <td>Логин:</td>
+                <td><input type="text" placeholder="Логин" th:field="*{username}"/></td>
+            </tr>
+            <tr>
+                <td>Пароль:</td>
+                <td> <input type="password" placeholder="Пароль" th:field ="*{password}"/></td>
+            </tr>
+            <tr>
+                <td>Имя: </td>
+                <td> <input type="text" placeholder="Имя" th:field ="*{firstName}"/></td>
+            </tr>
+            <tr>
+                <td>Фамимля:</td>
+                <td><input type="text" placeholder="Фамимля" th:field ="*{lastName}"/> </td>
+            </tr>
+            <tr>
+                <td>Почта: </td>
+                <td> <input type="email" placeholder="email@email.com" th:field ="*{email}"/></td>
+            </tr>
+        </table>
+
+        <button type="submit">Save</button>
+    </form>
+    <hr>
+    <form th:action="@{/login}" method="get">
+        <button type="submit">return</button>
+    </form>
+    <br>
+
+</div>
+</body>
+</html>

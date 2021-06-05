@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("product")
+@RequestMapping({"/product",""})
 public class ProductController {
 
 
@@ -24,7 +24,7 @@ public class ProductController {
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof User) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("user",user.getUsername() );
-        } else model.addAttribute("user","Неизвестный пользователь" );
+        } else model.addAttribute("user",null );
 
 
         model.addAttribute("date", new Date());

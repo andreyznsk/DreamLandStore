@@ -2,6 +2,7 @@ package ru.geekbrains.DreamLandStore.controller;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import ru.geekbrains.DreamLandStore.model.entry.MyUser;
 import ru.geekbrains.DreamLandStore.model.repository.UserRepository;
 
+import javax.persistence.Column;
 import java.security.Principal;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -29,6 +32,8 @@ public class UsersViewController {
        model.addAttribute("user",principal.getUsername());
        model.addAttribute("myUsers",myUsers);
         model.addAttribute("date", new Date());
-        return "viewUsers";
+       Collection<GrantedAuthority> authorities = principal.getAuthorities();
+       System.out.println(authorities);
+       return "viewUsers";
     }
 }
