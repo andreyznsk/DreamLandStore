@@ -19,7 +19,7 @@
 
     </div>
     <div class="outer" th:each="myUser: ${myUsers}">
-        <div class="inner" th:text="${myUser.getUserName()}">Имя</div>
+        <div class="inner" th:text="${myUser.getUsername()}">Имя</div>
         <div class="inner item" th:text="${myUser.id}">Enabled?</div>
     </div>
 </div>

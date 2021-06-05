@@ -1,11 +1,6 @@
 package ru.geekbrains.DreamLandStore.controller;
 
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -17,7 +12,6 @@ import java.security.Principal;
 import java.util.Date;
 import java.util.Optional;
 
-@RequiredArgsConstructor
 @Controller
 @RequestMapping("product")
 public class ProductController {

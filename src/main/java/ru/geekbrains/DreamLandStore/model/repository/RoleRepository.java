@@ -6,5 +6,5 @@ import ru.geekbrains.DreamLandStore.model.entry.Role;
 import java.util.List;
 
 public interface RoleRepository extends JpaRepository<Role,Long> {
-    Role[] findOneByName(String role_client);
+   List<Role> findOneByName(String role_client);
 }

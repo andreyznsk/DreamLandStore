@@ -15,10 +15,8 @@ import ru.geekbrains.DreamLandStore.model.repository.UserRepository;
 import java.util.Date;
 
 @Controller
-@RequiredArgsConstructor
 public class UsersAuthController {
 
-    private final UserRepository userRepository;
 
     @GetMapping("/login")
     public String showUsers(Model model) {
