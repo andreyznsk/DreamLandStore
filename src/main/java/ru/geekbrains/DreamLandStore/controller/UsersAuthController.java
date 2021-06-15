@@ -23,18 +23,15 @@ public class UsersAuthController {
 
     @GetMapping("/login")
     public String showUsers(Model model) {
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof User) {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            model.addAttribute("user",user.getUsername() );
-        } else model.addAttribute("user",null );
+            model.addAttribute("user",user.getUsername());
         model.addAttribute("date", new Date());
         return "login";
     }
 
     @GetMapping("/createUser")
     public String createUser(Model model){
-        MyUser myUser  = new MyUser();
-        model.addAttribute("myUser",myUser);
+        model.addAttribute("myUser", new MyUser());
         return "createUser";
     }
 
