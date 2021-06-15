@@ -2,25 +2,26 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Список продуктов</title>
+    <title>Список пользователей</title>
     <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
 </head>
 
 <body>
 <th:block th:insert="~{_template :: header}"/>
-
 <div class="container">
-
     <h1>Управление пользователями</h1>
     <div class="outer header">
 
-        <div class="inner">Имя</div>
-        <div class="inner">ID</div>
+        <div class="inner">Id</div>
+        <div class="inner">Name</div>
+        <div class="inner">Roles</div>
 
     </div>
     <div class="outer" th:each="myUser: ${myUsers}">
-        <div class="inner" th:text="${myUser.getUsername()}">Имя</div>
-        <div class="inner item" th:text="${myUser.id}">Enabled?</div>
+        <div class="inner" th:text="${myUser.id}">Имя</div>
+        <div class="inner" th:text="${myUser.getUsername()}">Id</div>
+        <div class="inner item" th:text="${myUser.getAuthorities()}">Roles</div>
+
     </div>
 </div>
 

@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>DreamLand_store</title>
+    <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
 </head>
 
 <body>
-<th:block th:insert="~{_template :: header}"/>
-<h1>Тут будет список продуктов.</h1>
-<th:block th:insert="~{_template :: footer}"/>
+<div class="container">
+    <th:block th:insert="~{_template :: header}"/>
+    <h1 class="title">Тут будет список продуктов.</h1>
+    <th:block th:insert="~{_template :: footer}"/>
+</div>
 </body>
 </html>
