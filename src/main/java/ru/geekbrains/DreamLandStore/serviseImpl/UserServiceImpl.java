@@ -1,6 +1,8 @@
 package ru.geekbrains.DreamLandStore.serviseImpl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,7 +24,14 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Autowired
+    @Lazy
+    public void setBCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
+
 
     @Override
     public MyUser findByUserName(String username) {
