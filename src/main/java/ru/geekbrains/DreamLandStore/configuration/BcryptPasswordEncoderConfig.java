@@ -3,13 +3,11 @@ package ru.geekbrains.DreamLandStore.configuration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Component;
 
 
-@RequiredArgsConstructor
+@Component
 public class BcryptPasswordEncoderConfig {
-
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {

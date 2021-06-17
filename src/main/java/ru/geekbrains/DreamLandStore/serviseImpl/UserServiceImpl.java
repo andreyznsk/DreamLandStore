@@ -24,13 +24,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @Autowired
-    @Lazy
-    public void setBCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
 
     @Override
