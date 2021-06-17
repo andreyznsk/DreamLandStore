@@ -23,9 +23,10 @@ public class UsersAuthController {
 
     @GetMapping("/login")
     public String showUsers(Model model) {
+        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof User) {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            model.addAttribute("user",user.getUsername());
-        model.addAttribute("date", new Date());
+        }
+            model.addAttribute("date", new Date());
         return "login";
     }
 
