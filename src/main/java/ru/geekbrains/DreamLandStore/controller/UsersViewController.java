@@ -25,7 +25,7 @@ public class UsersViewController {
 
     private final UserRepository userRepository;
 
-   @GetMapping({"","/showAll"})
+   @GetMapping("")
     public String showUsers(Model model) {
        List<MyUser> myUsers = userRepository.findAll();
        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

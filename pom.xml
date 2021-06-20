@@ -104,9 +104,9 @@
 				<artifactId>flyway-maven-plugin</artifactId>
 				<version>5.2.1</version>
 				<configuration>
-					<url>jdbc:mysql://localhost:3306/dreamland?useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC</url>
-					<user>juser</user>
-					<password>Mypass_123</password>
+					<url>jdbc:h2:db/data/db?useSSL=false&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC</url>
+					<user>sa</user>
+					<password>sa</password>
 					<locations>filesystem:db/migration</locations>
 					<schemas>
 						<schema>dreamland</schema>

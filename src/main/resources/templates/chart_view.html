@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список продуктов</title>
+    <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
+</head>
+
+<body>
+<th:block th:insert="~{_template :: header}"/>
+
+<div class="container">
+    <h1>Корзина пользователя</h1>
+    <div class="outer header">
+        <div  class="inner item">Название</div>
+        <div  class="inner item">Цена</div>
+        <div class="inner">Удалить</div>
+
+    </div>
+    <div class="outer" th:each="chart: ${charts}">
+        <div class="inner item" th:text="${chart.getProduct().getName()}">Название</div>
+        <div class="inner item" th:text="${chart.getProduct().getPrice()}">Цена</div>
+        <div class="inner btn">
+            <a th:href="@{/product/chart/delete/{id}(id=${chart.getId()})}">remove</a>
+        </div>
+    </div>
+    <p th:text="'Стоимость всех товаров :' + ${totalPrice}"/>
+    <form class="form" th:action="@{/product/chart/deleteAll}" method="get">
+        <button type="submit">Отчистить корзину</button>
+    </form>
+</div>
+<th:block th:insert="~{_template :: footer}"/>
+</body>
+</html>
