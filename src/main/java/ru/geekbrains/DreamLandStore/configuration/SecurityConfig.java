@@ -21,12 +21,13 @@ import ru.geekbrains.DreamLandStore.serviseImpl.UserService;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private UserService userService;
+    private final UserService userService;
+    private final BcryptPasswordEncoderConfig bcryptPasswordEncoderConfig;
 
-    @Autowired
+   /* @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
-    }
+    }*/
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -60,16 +61,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         ;
     }
 
-    @Bean
+/*    @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
+    }*/
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
         auth.setUserDetailsService(userService);
-        auth.setPasswordEncoder(passwordEncoder());
+        auth.setPasswordEncoder(bcryptPasswordEncoderConfig.passwordEncoder());
         return auth;
     }
 }

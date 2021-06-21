@@ -20,13 +20,8 @@ public class ProductController {
     @GetMapping({"","/{pageId}"})
     public String index(Model model, @PathVariable(required = false) Integer pageId,@RequestParam(defaultValue = "id") String sortBy,
     @RequestParam(defaultValue = "ASC") String sortDirection) {
-
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof User) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("user",user.getUsername() );
-        } else model.addAttribute("user",null );
-
-
         model.addAttribute("date", new Date());
         return "index";
     }

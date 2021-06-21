@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.geekbrains.DreamLandStore.configuration.BcryptPasswordEncoderConfig;
 import ru.geekbrains.DreamLandStore.model.entry.Role;
 import ru.geekbrains.DreamLandStore.model.entry.MyUser;
 import ru.geekbrains.DreamLandStore.model.repository.RoleRepository;
@@ -21,7 +22,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public MyUser findByUserName(String username) {
@@ -34,7 +35,7 @@ public class UserServiceImpl implements UserService {
         if (findByUserName(myUser.getUsername()) != null) {
             return false;
         }
-        myUser.setPassword(passwordEncoder.encode(myUser.getPassword()));
+        myUser.setPassword(bCryptPasswordEncoder.encode(myUser.getPassword()));
         myUser.setRoles(roleRepository.findOneByName("ROLE_CLIENT"));
         userRepository.save(myUser);
         return true;
