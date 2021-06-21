@@ -4,7 +4,6 @@ package ru.geekbrains.DreamLandStore.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,9 +22,7 @@ public class UsersAuthController {
 
     @GetMapping("/login")
     public String showUsers(Model model) {
-            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            model.addAttribute("user",user.getUsername());
-        model.addAttribute("date", new Date());
+            model.addAttribute("date", new Date());
         return "login";
     }
 
@@ -40,7 +37,7 @@ public class UsersAuthController {
         if(userService.save(myUser)) {
             model.addAttribute("user",myUser.getUsername() );
             model.addAttribute("date", new Date());
-            return "index";
+            return "redirect:/product";
         } else {
             ModelAndView modelAndView = new ModelAndView("redirect:createUser?error");
             return modelAndView.getViewName();

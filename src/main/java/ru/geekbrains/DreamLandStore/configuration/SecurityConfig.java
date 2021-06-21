@@ -22,15 +22,10 @@ import ru.geekbrains.DreamLandStore.serviseImpl.UserService;
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserService userService;
-    private final BcryptPasswordEncoderConfig bcryptPasswordEncoderConfig;
-
-   /* @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }*/
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth){
         auth.authenticationProvider(authenticationProvider());
     }
 
@@ -47,30 +42,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/perform_login")
-                .defaultSuccessUrl("/viewUsers")
+                .defaultSuccessUrl("/product")
                 .permitAll()
                 .and()
                 .logout()
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout")
+                .logoutSuccessUrl("/product")
                 .deleteCookies("JSESSIONID")
                 .permitAll()
 
         ;
     }
 
-/*    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }*/
-
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
         auth.setUserDetailsService(userService);
-        auth.setPasswordEncoder(bcryptPasswordEncoderConfig.passwordEncoder());
+        auth.setPasswordEncoder(bCryptPasswordEncoder);
         return auth;
     }
 }

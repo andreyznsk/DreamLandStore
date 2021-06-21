@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>DreamLand_store</title>
+    <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
+</head>
+
+<body>
+<th:block th:insert="~{_template :: header}"/>
+<div class="container">
+    <h1>Магазин продуктов</h1>
+    <div>
+        <a th:if="${previousPage != null}" th:href="@{/product/{pageId} (pageId=${previousPage})}"
+           th:text="'< '+${previousPage}"></a>
+        <span th:text="${currentPage}"></span>
+        <a th:if="${nextPage != null}" th:href="@{/product/{pageId} (pageId=${nextPage})}" th:text="${nextPage}+' >'"></a>
+    </div>
+    <div class="outer header">
+        <div class="inner">
+            <a th:href="@{/product/{currentPage} (currentPage = ${currentPage},sortBy='id')}" th:text="ИД "></a>
+            <a th:if="${sortDirection == 'ASC'}" th:href="@{/product/{currentPage} (currentPage = ${currentPage},
+            sortBy='id',sortDirection = 'DESC')}" th:text="'˄˅'"></a>
+            <a th:if="${sortDirection == 'DESC'}" th:href="@{/product/{currentPage} (currentPage = ${currentPage},
+            sortBy='id',sortDirection = 'ASC')}" th:text="'˄˅'"></a>
+        </div>
+        <div  class="inner item"><a th:href="@{/product/{currentPage} (currentPage = ${currentPage},sortBy='name')}" th:text="Название "></a>
+            <a th:if="${sortDirection == 'ASC'}" th:href="@{/product/{currentPage} (currentPage = ${currentPage},
+            sortBy='name',sortDirection = 'DESC')}" th:text="'˄˅'"></a>
+            <a th:if="${sortDirection == 'DESC'}" th:href="@{/product/{currentPage} (currentPage = ${currentPage},
+            sortBy='name',sortDirection = 'ASC')}" th:text="'˄˅'"></a>
+        </div>
+
+        <div  class="inner item">
+            <a class="inner item" th:href="@{/product/{currentPage} (currentPage = ${currentPage},sortBy='price')}" th:text="Цена "></a>
+            <a th:if="${sortDirection == 'ASC'}" th:href="@{/product/{currentPage} (currentPage = ${currentPage},
+            sortBy='price',sortDirection = 'DESC')}" th:text="'˄˅'"></a>
+            <a th:if="${sortDirection == 'DESC'}" th:href="@{/product/{currentPage} (currentPage = ${currentPage},
+            sortBy='price',sortDirection = 'ASC')}" th:text="'˄˅'"></a>
+
+        </div>
+        <div sec:authorize="hasAnyRole('ADMIN','MANAGER')" class="inner">Удалить</div>
+        <div sec:authorize="hasAnyRole('ADMIN','MANAGER')" class="inner">Редактировать</div>
+        <div class="inner">В корзину</div>
+
+    </div>
+    <div class="outer" th:each="product: ${products}">
+        <div class="inner" th:text="${product.getId()}">ИД</div>
+        <div class="inner item" th:text="${product.getName()}">Название</div>
+        <div class="inner item" th:text="${product.getPrice()}">Цена</div>
+        <div sec:authorize="hasAnyRole('ADMIN','MANAGER')" class="inner btn">
+            <a th:href="@{/product/delete/{id}(id=${product.getId()})}">remove></a>
+        </div>
+        <div sec:authorize="hasAnyRole('ADMIN','MANAGER')" class="inner btn">
+            <a th:href="@{/product/update/{id}(id=${product.getId()})}">edit</a>
+        </div>
+        <div class="inner btn">
+            <a th:href="@{/product/addChart/{id}(id=${product.getId()})}">addChart</a>
+        </div>
+    </div>
+    <div sec:authorize="hasAnyRole('ADMIN','SUPER_ADMIN')">
+        <form class="form" th:action="@{/product/addprod}" method="get">
+            <button type="submit">Добавить продукт</button>
+        </form>
+        <hr>
+        <form class="form" th:action="@{/product/maxprice}" method="get">
+            Максимальная цена: <input type="text" th:name="maxprice"/>
+            <button type="submit">Меньше мах. цены</button>
+        </form>
+        <hr>
+        <form class="form" th:action="@{/product/minprice}" method="get">
+            Минимальная цена: <input type="text" th:name="minprice"/>
+            <button type="submit">Больше мин. цены</button>
+        </form>
+        <hr>
+        <form class="form" th:action="@{/product/btwprice}" method="get">
+            Максимальная цена: <input type="text" th:name="minprice"  style="width: 50px;"/>
+            Минимальная цена: <input type="text" th:name="maxprice" style="width: 50px;"/>
+            <button type="submit">Показать между ценами</button>
+        </form>
+        <hr>
+        <form class="form" th:action="@{/viewUsers}" method="get">
+            <button type="submit">Показать списко пользователей</button>
+        </form>
+    </div>
+</div>
+
+<th:block th:insert="~{_template :: footer}"/>
+
+</body>
+</html>

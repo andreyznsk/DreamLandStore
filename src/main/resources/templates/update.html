@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update product</title>
+</head>
+<body>
+<th:block th:insert="~{_template :: header}"/>
+<form th:action="@{/app/update/{id} (id=${product.id})}" th:object="${product}" method="post">
+
+    id: <input type="text" th:field="*{id}" th:disabled="true"/>
+    <br>
+    title: <input type="text" th:field="*{name}"/>
+    <br>
+    price: <input type="text" th:field ="*{price}"/>
+    <br>
+    <button type="submit">Обновить</button>
+</form>
+<hr>
+<span th:text="${message}" />
+<hr>
+  <form th:action="@{/app/}" method="get">
+        <button type="submit">show</button>
+    </form>>
+    <br>
+
+<th:block th:insert="~{_template :: footer}"/>
+</body>
+</html>

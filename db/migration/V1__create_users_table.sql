@@ -1,5 +1,5 @@
 CREATE TABLE users (
-                       id         INT          NOT NULL AUTO_INCREMENT,
+                       id         IDENTITY NOT NULL,
                        username   VARCHAR(50)  NOT NULL,
                        password   VARCHAR(100) NOT NULL,
                        first_name VARCHAR(100) NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE role (
-                      id        INT         NOT NULL AUTO_INCREMENT,
+                      id        INT        IDENTITY NOT NULL,
                       name VARCHAR(50) NOT NULL,
                       PRIMARY KEY (id)
 

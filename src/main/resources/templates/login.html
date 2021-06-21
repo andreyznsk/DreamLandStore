@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
 </head>
 <body>
-<div class="container">
 <th:block th:insert="~{_template :: header}"/>
+<div class="container">
     <form class="form" name="f" action="perform_login" th:href="perform_login" method="post">
         <div th:if="${param.error}">
             <div class="item">Invalid user name or password!</div>

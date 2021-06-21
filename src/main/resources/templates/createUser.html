@@ -3,11 +3,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add new product</title>
+    <title>Создать пользователя DreamLand</title>
+    <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
 </head>
 
 <body>
+<th:block th:insert="~{_template :: header}"/>
 <div class="container">
     <div th:if="${param.error}">
         <div class="item">Invalid user name or password!</div>
@@ -43,7 +44,7 @@
         <button type="submit">return</button>
     </form>
     <br>
-
 </div>
+<th:block th:insert="~{_template :: footer}"/>
 </body>
 </html>
