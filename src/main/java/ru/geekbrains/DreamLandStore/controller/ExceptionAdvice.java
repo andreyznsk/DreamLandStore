@@ -49,4 +49,13 @@ public class ExceptionAdvice {
         return "Sorry some Error";
     }
 
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public String allException(DataIntegrityViolationException e){
+        System.out.println("Sorry some Error" + e.getMessage());
+        e.printStackTrace();
+        return "Sorry some Error";
+    }
+
 }

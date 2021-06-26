@@ -2,15 +2,13 @@ package ru.geekbrains.DreamLandStore.controller;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import ru.geekbrains.DreamLandStore.model.entry.MyUser;
-import ru.geekbrains.DreamLandStore.serviseImpl.UserService;
+import ru.geekbrains.DreamLandStore.serviseImpl.userService.UserService;
 
 import java.util.Date;
 

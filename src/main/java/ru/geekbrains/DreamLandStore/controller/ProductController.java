@@ -2,8 +2,6 @@ package ru.geekbrains.DreamLandStore.controller;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -12,16 +10,13 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.context.request.RequestContextHolder;
 import ru.geekbrains.DreamLandStore.model.entry.Chart;
-import ru.geekbrains.DreamLandStore.model.entry.MyUser;
 import ru.geekbrains.DreamLandStore.model.entry.Product;
 import ru.geekbrains.DreamLandStore.model.repository.ChartRepository;
 import ru.geekbrains.DreamLandStore.model.repository.ProductRepository;
-import ru.geekbrains.DreamLandStore.model.repository.UserRepository;
-import ru.geekbrains.DreamLandStore.model.sessionEntity.SessionUser;
+import ru.geekbrains.DreamLandStore.serviseImpl.sessionService.SessionUser;
+import ru.geekbrains.DreamLandStore.serviseImpl.sessionService.SessionUserImpl;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -33,7 +28,6 @@ import java.util.Optional;
 public class ProductController {
     private final ProductRepository productRepository;
     private final ChartRepository chartRepository;
-    private final UserRepository userRepository;
     private final SessionUser sessionUser;
 
     @GetMapping({"","/{pageId}"})
@@ -48,7 +42,7 @@ public class ProductController {
             model.addAttribute("user", user.getUsername());
             sessionUser.setMyUserByUser(user);
         } else {
-            sessionUser.setAnonymousUser(RequestContextHolder.currentRequestAttributes().getSessionId().hashCode());
+            sessionUser.setAnonymousUser();
         }
         Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
         pageRequest = PageRequest.of(pageId - 1,5,sort);
@@ -117,7 +111,7 @@ public class ProductController {
         chart.setProdId(id);
         Product product = productRepository.findById(id).orElseThrow(NullPointerException::new);
         chart.setProduct(product);
-        chart.setCustomerId(sessionUser.getMyUser().getId());
+        chart.setCustomerId((sessionUser.getMyUser().getId()==null)?null:sessionUser.getMyUser().getId());
         if (sessionUser.getMyUser().getUsername() != null) {
             chartRepository.save(chart);
         } else {

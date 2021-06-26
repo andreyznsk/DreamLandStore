@@ -1,6 +1,9 @@
 package ru.geekbrains.DreamLandStore.model.entry;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +15,8 @@ import java.util.stream.Collectors;
 @Entity
 @Data
 @Table(name = "users")
+@AllArgsConstructor
+@NoArgsConstructor
 public class MyUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,9 +43,6 @@ public class MyUser implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
-
-    public MyUser() {
-    }
 
     public MyUser(String username, String password, String firstName, String lastName, String email) {
         this.username = username;

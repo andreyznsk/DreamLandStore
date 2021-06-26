@@ -14,10 +14,6 @@ public interface ChartRepository extends JpaRepository<Chart,Long> {
 
     List<Chart> findAllByCustomerId(Long id);
 
-    void deleteByCustomerIdAndProdId(Long customerId, Long productId);
-
-    Chart getByCustomerIdAndProdId(long customerId, long prodId);
-
     @Transactional
     void deleteAllByCustomerId(long customerId);
 

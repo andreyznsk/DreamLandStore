@@ -9,10 +9,6 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product,Long> {
 
-    List<Product> findAllByOrderById();
-
-    List<Product> findAllByOrderById(PageRequest pathSelectors);
-
     List<Product> findAllByPriceBefore(BigDecimal price);
 
     List<Product> findAllByPriceAfter(BigDecimal minPrice);
