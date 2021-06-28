@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Логин в магазин DreamLand</title>
+    <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
+</head>
+<body>
+<th:block th:insert="~{_template :: header}"/>
+<div class="container">
+    <form th:action="@{/app/addprod}" th:object="${product}" method="post">
+        <br>
+        title: <input type="text" th:field="*{name}"/>
+        <br>
+        price: <input type="text" th:field ="*{price}"/>
+        <br>
+        <button type="submit">Save</button>
+    </form>
+    <hr>
+    <span th:text="${message}" />
+    <hr>
+    <form th:action="@{/app/showAll}" method="get">
+        <button type="submit">show</button>
+    </form>>
+    <br>
+
+</div>
+<th:block th:insert="~{_template :: footer}"/>
+</body>
+</html>

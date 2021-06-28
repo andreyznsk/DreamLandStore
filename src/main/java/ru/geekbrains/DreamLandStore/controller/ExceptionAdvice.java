@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class ExceptionAdvice {
 
     @ExceptionHandler({NullPointerException.class,IllegalArgumentException.class})
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public String notFoundException(RuntimeException e){
         System.out.println("Error! " + e.getMessage());

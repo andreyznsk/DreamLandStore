@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Логин в магазин DreamLand</title>
+    <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
+</head>
+<body>
+<th:block th:insert="~{_template :: header}"/>
+<h1>Магазин продуктов</h1>
+
+<h2>Информация по продукту по ID</h2>
+<table>
+    <thead>
+    <tr>
+        <th> Номер </th>
+        <th> Название </th>
+        <th> Цена </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${null}">
+        <td colspan="2"> Пусто </td>
+    </tr>
+    <tr th:else>
+        <td width="50px" align="center"><span th:text="${product.id}"> Номер </span></td>
+        <td width="100px" align="center"><span th:text="${product.name}"> Название </span></td>
+        <td width="50px" align="center"><span th:text="${product.price}"> Цена </span></td>
+
+    </tr>
+    </tbody>
+</table>
+<th:block th:insert="~{_template :: footer}"/>
+</body>
+</html>

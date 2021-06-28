@@ -90,7 +90,7 @@ class SessionUserTest {
     }
 
     @Test
-    void getMyUser() {
+    void getMyUser() {//TODO
         MyUser myUserExpected = new MyUser(1L, "admin", "$2y$12$n7gF2VeEz4ST9MjvdroaBOVClYYO35naUzdr.iHW14Ll42r/JccS.",
                 "Andrey", "Zaitsev", "1@1.ru", new ArrayList<>());
         sessionUser.setMyUserByUser(new User("admin", "[PROTECTED]", new ArrayList<>()));

@@ -62,29 +62,29 @@ public class ProductController {
     @GetMapping("/product/{id}")
     public String getProductById(Model model, @PathVariable Long id){
         Optional<Product> optional = productRepository.findById(id);
-        model.addAttribute("product", optional.orElseThrow(IllegalArgumentException::new));
+        model.addAttribute("product", optional.orElseThrow(NullPointerException::new));
         return "productinfo";
 
     }
 
     @GetMapping("/addprod")
-    public String getForm(Model model){
+    public String addProdGet(Model model){
         Product product = new Product();
         model.addAttribute("product",product);
         return "addprod";
     }
 
     @PostMapping("/addprod")
-    public String getItemInfo(Model model,Product product) {
+    public String addProdPost(Model model,Product product) {
         productRepository.save(product);
         model.addAttribute("message", "Сохранено");
         return "addprod";
     }
 
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public String deleteProdById(Model model,@PathVariable Long id){
         productRepository.deleteById(id);
-        return "redirect:/app";
+        return "redirect:/product";
     }
 
 

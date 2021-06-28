@@ -17,4 +17,5 @@ public interface ChartRepository extends JpaRepository<Chart,Long> {
     @Transactional
     void deleteAllByCustomerId(long customerId);
 
+    void delete(Chart chart);
 }

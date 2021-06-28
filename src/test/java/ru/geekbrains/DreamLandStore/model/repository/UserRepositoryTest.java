@@ -46,7 +46,6 @@ class UserRepositoryTest {
     void saveTest() {
         MyUser myUserExpected = new MyUser(3L,"newUser","testPassword",
                 "Andrey", "Zaitsev", "3@3.ru",new ArrayList<>());
-        userRepository.save(myUserExpected);
         MyUser newUserActual = userRepository.save(myUserExpected);
         assertEquals(myUserExpected,newUserActual);
     }
