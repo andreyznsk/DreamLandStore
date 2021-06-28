@@ -9,6 +9,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.geekbrains.DreamLandStore.model.entry.MyUser;
 import ru.geekbrains.DreamLandStore.model.repository.ChartRepository;
+import ru.geekbrains.DreamLandStore.model.repository.ProductRepository;
+import ru.geekbrains.DreamLandStore.model.repository.RoleRepository;
 import ru.geekbrains.DreamLandStore.model.repository.UserRepository;
 import ru.geekbrains.DreamLandStore.serviseImpl.sessionService.SessionUser;
 
@@ -19,7 +21,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Sql({"/drop.sql","/schema.sql","/data.sql"})
 @SpringBootTest
 @AutoConfigureMockMvc
 class ChartControllerWebLayerTest {
@@ -32,9 +33,6 @@ class ChartControllerWebLayerTest {
 
     @MockBean
     private ChartRepository chartRepository;
-
-    @MockBean
-    private UserRepository userRepository;
 
     @Test
     void chart() throws Exception {

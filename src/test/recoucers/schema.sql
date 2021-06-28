@@ -1,3 +1,9 @@
+drop table if exists USERS cascade;
+drop table if exists  USERS_ROLES cascade;
+drop table if exists  ROLE cascade;
+drop table if exists  PRODUCTS cascade;
+DROP table if exists  CHART cascade;
+
 CREATE TABLE users (
                        id         IDENTITY NOT NULL,
                        username   VARCHAR(50)  NOT NULL,

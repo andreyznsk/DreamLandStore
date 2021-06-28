@@ -16,7 +16,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Sql({"/drop.sql","/schema.sql","/data.sql"})
 @SpringBootTest
 @AutoConfigureMockMvc
 class UsersViewControllerWebLayerTest {

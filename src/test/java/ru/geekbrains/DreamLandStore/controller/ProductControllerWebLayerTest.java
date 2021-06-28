@@ -28,7 +28,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@Sql({"/drop.sql","/schema.sql","/data.sql"})
 @SpringBootTest
 @AutoConfigureMockMvc
 class ProductControllerWebLayerTest {
