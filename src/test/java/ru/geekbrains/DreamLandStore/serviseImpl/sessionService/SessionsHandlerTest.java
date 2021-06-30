@@ -18,25 +18,25 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Sql({"/drop.sql", "/schema.sql", "/data.sql"})
-class SessionUserTest {
+class SessionsHandlerTest {
 
     @Autowired
-    private SessionUser sessionUser;
+    private SessionsHandler sessionsHandler;
 
     @Test
     void setMyUserByUser() {
         MyUser myUserExpected = new MyUser(2L, "andrey", "$2y$12$n7gF2VeEz4ST9MjvdroaBOVClYYO35naUzdr.iHW14Ll42r/JccS.",
                 "Andrey", "Zaitsev", "2@2.ru", new ArrayList<>());
-        sessionUser.setMyUserByUser(new User("andrey", "andrey", new ArrayList<>()));
-        MyUser myUserActual = sessionUser.getMyUser();
+        sessionsHandler.setMyUserByUser(new User("andrey", "andrey", new ArrayList<>()));
+        MyUser myUserActual = sessionsHandler.getMyUser();
         assertEquals(myUserExpected, myUserActual);
 
     }
 
     @Test
     void setAnonymousUser() {
-        sessionUser.setAnonymousUser();
-        MyUser myUserActual = sessionUser.getMyUser();
+        sessionsHandler.setAnonymousUser();
+        MyUser myUserActual = sessionsHandler.getMyUser();
         assertEquals(new MyUser(), myUserActual);
     }
 
@@ -52,16 +52,16 @@ class SessionUserTest {
         List<Chart> chartsExpected = new ArrayList<>();
         chartsExpected.add(new Chart(1L, 1L, 1L, product));
         chartsExpected.add(new Chart(2L, 1L, 2L, product1));
-        sessionUser.setMyUserByUser(new User("admin", "[PROTECTED]", new ArrayList<>()));
-        List<Chart> charts = sessionUser.getCharts();
+        sessionsHandler.setMyUserByUser(new User("admin", "[PROTECTED]", new ArrayList<>()));
+        List<Chart> charts = sessionsHandler.getCharts();
         assertEquals(chartsExpected, charts);
     }
 
 
     @Test
     void getTotalPrice() {
-        sessionUser.setMyUserByUser(new User("admin", "[PROTECTED]", new ArrayList<>()));
-        double totalPrice = sessionUser.getTotalPrice();
+        sessionsHandler.setMyUserByUser(new User("admin", "[PROTECTED]", new ArrayList<>()));
+        double totalPrice = sessionsHandler.getTotalPrice();
         assertEquals(33.0, totalPrice);
     }
 
@@ -69,23 +69,23 @@ class SessionUserTest {
     void removeChartFromAnonymousUser() {
         List<Chart> chartListExpected = new ArrayList<>();
         chartListExpected.add(new Chart(0L, null, null, null));
-        sessionUser.setAnonymousUser();
-        sessionUser.addTempChart(new Chart(0L, null, null, null));
-        sessionUser.addTempChart(new Chart(0L, null, null, null));
-        sessionUser.removeChartFromAnonymousUser(1L);
-        List<Chart> chartsActual = sessionUser.getCharts();
+        sessionsHandler.setAnonymousUser();
+        sessionsHandler.addTempChart(new Chart(0L, null, null, null));
+        sessionsHandler.addTempChart(new Chart(0L, null, null, null));
+        sessionsHandler.removeChartFromAnonymousUser(1L);
+        List<Chart> chartsActual = sessionsHandler.getCharts();
         assertEquals(chartListExpected, chartsActual);
 
     }
 
     @Test
     void deleteAll() {
-        sessionUser.setAnonymousUser();
-        sessionUser.addTempChart(new Chart());
-        sessionUser.addTempChart(new Chart());
-        sessionUser.addTempChart(new Chart());
-        sessionUser.deleteAllFromTmpChartList();
-        List<Chart> charts = sessionUser.getCharts();
+        sessionsHandler.setAnonymousUser();
+        sessionsHandler.addTempChart(new Chart());
+        sessionsHandler.addTempChart(new Chart());
+        sessionsHandler.addTempChart(new Chart());
+        sessionsHandler.deleteAllFromTmpChartList();
+        List<Chart> charts = sessionsHandler.getCharts();
         assertEquals(new ArrayList<>(),charts);
     }
 
@@ -93,8 +93,8 @@ class SessionUserTest {
     void getMyUser() {//TODO
         MyUser myUserExpected = new MyUser(1L, "admin", "$2y$12$n7gF2VeEz4ST9MjvdroaBOVClYYO35naUzdr.iHW14Ll42r/JccS.",
                 "Andrey", "Zaitsev", "1@1.ru", new ArrayList<>());
-        sessionUser.setMyUserByUser(new User("admin", "[PROTECTED]", new ArrayList<>()));
-        MyUser myUserActual = sessionUser.getMyUser();
+        sessionsHandler.setMyUserByUser(new User("admin", "[PROTECTED]", new ArrayList<>()));
+        MyUser myUserActual = sessionsHandler.getMyUser();
         myUserActual.setRoles(new ArrayList<>());
         System.out.println(myUserActual);
         assertEquals(myUserExpected, myUserActual);

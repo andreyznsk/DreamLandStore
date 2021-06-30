@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список продуктов</title>
+    <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
+</head>
+
+<body>
+<th:block th:insert="~{_template :: header}"/>
+
+<div class="container">
+    <div class="header" th:text="${orderNumber}">Зака No: </div>
+    <div class="outer header">
+        <div  class="inner item">Название</div>
+        <div  class="inner item">Цена</div>
+    </div>
+    <div class="outer" th:each="orderDetail: ${orderDetails}">
+        <div class="inner item" th:text="${orderDetail.getProduct().getName()}">Название</div>
+        <div class="inner item" th:text="${orderDetail.getProduct().getPrice()}">Цена</div>
+    </div>
+    <p th:text="'Стоимость всех товаров :' + ${totalPrice}"/>
+
+</div>
+<th:block th:insert="~{_template :: footer}"/>
+</body>
+</html>

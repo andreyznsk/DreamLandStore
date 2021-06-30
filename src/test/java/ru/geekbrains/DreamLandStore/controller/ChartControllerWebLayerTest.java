@@ -5,14 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.geekbrains.DreamLandStore.model.entry.MyUser;
 import ru.geekbrains.DreamLandStore.model.repository.ChartRepository;
-import ru.geekbrains.DreamLandStore.model.repository.ProductRepository;
-import ru.geekbrains.DreamLandStore.model.repository.RoleRepository;
-import ru.geekbrains.DreamLandStore.model.repository.UserRepository;
-import ru.geekbrains.DreamLandStore.serviseImpl.sessionService.SessionUser;
+import ru.geekbrains.DreamLandStore.serviseImpl.sessionService.SessionsHandler;
 
 
 import static org.mockito.Mockito.*;
@@ -29,7 +25,7 @@ class ChartControllerWebLayerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private SessionUser sessionUser;
+    private SessionsHandler sessionsHandler;
 
     @MockBean
     private ChartRepository chartRepository;
@@ -37,7 +33,7 @@ class ChartControllerWebLayerTest {
     @Test
     void chart() throws Exception {
 
-        when(sessionUser.getMyUser()).thenReturn(new MyUser());
+        when(sessionsHandler.getMyUser()).thenReturn(new MyUser());
         mockMvc.perform(get("/product/chart"))
                 .andDo(print())
                 .andExpect(status().isOk());
@@ -45,7 +41,7 @@ class ChartControllerWebLayerTest {
 
     @Test
     void deleteProdById() throws Exception {
-        when(sessionUser.getMyUser()).thenReturn(new MyUser());
+        when(sessionsHandler.getMyUser()).thenReturn(new MyUser());
         mockMvc.perform(get("/product/chart/delete/1")).andDo(print())
                 .andExpect(status().isFound());
     }
@@ -54,7 +50,7 @@ class ChartControllerWebLayerTest {
     void deleteProdByIdException() throws Exception {
         MyUser myUser = new MyUser();
         myUser.setUsername("aaa");
-        when(sessionUser.getMyUser()).thenReturn(myUser);
+        when(sessionsHandler.getMyUser()).thenReturn(myUser);
         when(chartRepository.findById(1L)).thenThrow(new NullPointerException());
         mockMvc.perform(get("/product/chart/delete/1")).andDo(print())
                 .andExpect(status().isNotFound())
@@ -73,7 +69,7 @@ class ChartControllerWebLayerTest {
 
     @Test
     void deleteAll() throws Exception {
-        when(sessionUser.getMyUser()).thenReturn(new MyUser());
+        when(sessionsHandler.getMyUser()).thenReturn(new MyUser());
         mockMvc.perform(get("/product/chart/deleteAll")).andDo(print())
                 .andExpect(status().isFound());
 

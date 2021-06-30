@@ -10,13 +10,11 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
 import ru.geekbrains.DreamLandStore.model.entry.Chart;
 import ru.geekbrains.DreamLandStore.model.entry.Product;
 import ru.geekbrains.DreamLandStore.model.repository.ChartRepository;
 import ru.geekbrains.DreamLandStore.model.repository.ProductRepository;
-import ru.geekbrains.DreamLandStore.serviseImpl.sessionService.SessionUser;
-import ru.geekbrains.DreamLandStore.serviseImpl.sessionService.SessionUserImpl;
+import ru.geekbrains.DreamLandStore.serviseImpl.sessionService.SessionsHandler;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -28,7 +26,7 @@ import java.util.Optional;
 public class ProductController {
     private final ProductRepository productRepository;
     private final ChartRepository chartRepository;
-    private final SessionUser sessionUser;
+    private final SessionsHandler sessionsHandler;
 
     @GetMapping({"","/{pageId}"})
     public String index(Model model, @PathVariable(required = false) Integer pageId,@RequestParam(defaultValue = "id") String sortBy,
@@ -40,9 +38,9 @@ public class ProductController {
         if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof User) {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             model.addAttribute("user", user.getUsername());
-            sessionUser.setMyUserByUser(user);
+            sessionsHandler.setMyUserByUser(user);
         } else {
-            sessionUser.setAnonymousUser();
+            sessionsHandler.setAnonymousUser();
         }
         Sort sort = Sort.by(Sort.Direction.fromString(sortDirection), sortBy);
         pageRequest = PageRequest.of(pageId - 1,5,sort);
@@ -106,16 +104,16 @@ public class ProductController {
     }
 
     @GetMapping("/addChart/{id}")
-    public String addChartProdById(Model model,@PathVariable Long id){
+    public String addChartProdById(@PathVariable Long id){
         Chart chart = new Chart();
         chart.setProdId(id);
         Product product = productRepository.findById(id).orElseThrow(NullPointerException::new);
         chart.setProduct(product);
-        chart.setCustomerId((sessionUser.getMyUser().getId()==null)?null:sessionUser.getMyUser().getId());
-        if (sessionUser.getMyUser().getUsername() != null) {
+        chart.setCustomerId((sessionsHandler.getMyUser().getId()==null)?null: sessionsHandler.getMyUser().getId());
+        if (!sessionsHandler.isAnonymous()) {
             chartRepository.save(chart);
         } else {
-            sessionUser.addTempChart(chart);
+            sessionsHandler.addTempChart(chart);
         }
 
         return "redirect:/product";

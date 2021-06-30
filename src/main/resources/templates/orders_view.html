@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Список продуктов</title>
+    <link rel="stylesheet" href="../static/style.css" th:href="@{/style.css}">
+</head>
+
+<body>
+<th:block th:insert="~{_template :: header}"/>
+
+<div class="container">
+    <h1>Ваш заказ:</h1>
+    <div class="outer header">
+        <div  class="inner item">Номер заказа</div>
+        <div  class="inner item">Дата заказа</div>
+        <div class="inner">Адрес доставки</div>
+        <div  class="inner item">Итоговая цена</div>
+        <div  class="inner item">Оформлен</div>
+        <div  class="inner item">Оплачен</div>
+        <div  class="inner item">Доставлен</div>
+        <div class="inner btn">Редактировать</div>
+        <div class="inner btn">Удалить</div>
+    </div>
+
+    <div class="outer" th:each="order: ${orders}">
+        <div  class="inner item" th:text="${order.getOrderId()}">Номер заказа</div>
+        <div  class="inner item" th:text="${order.getOrderDate()}">Дата заказа</div>
+        <div class="inner"  th:text="${order.getDeliveryAddress()}">Адрес доставки</div>
+        <div  class="inner item" th:text="${order.getTotalPrice()}">Итоговая цена</div>
+        <div  class="inner item" th:text="${order.isOrdered()}">Оформлен</div>
+        <div  class="inner item" th:text="${order.isPaid()}">Оплачен</div>
+        <div  class="inner item" th:text="${order.isDelivered()}">Доставлен</div>
+        <div class="inner btn">
+            <a th:href="@{/product/order/update/{id}(id=${order.getOrderId()})}">Редактировать</a>
+        </div>
+        <div class="inner btn">
+            <a th:href="@{/product/order/remove/{id}(id=${order.getOrderId()})}">Удалить</a>
+        </div>
+    </div>
+
+</div>
+<th:block th:insert="~{_template :: footer}"/>
+</body>
+</html>
