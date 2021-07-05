@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@Sql({"/drop.sql","/schema.sql","/data.sql"})
+@Sql({"/dropTest.sql", "/schemaTest.sql", "/dataTest.sql"})
 class ChartRepositoryTest {
 
     @Autowired

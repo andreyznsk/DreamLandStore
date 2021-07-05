@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.geekbrains.DreamLandStore.model.entry.MyUser;
 import ru.geekbrains.DreamLandStore.model.repository.UserRepository;
+import ru.geekbrains.DreamLandStore.serviseImpl.sessionService.SessionsHandler;
 
 import javax.persistence.Column;
 import java.security.Principal;
@@ -24,9 +25,13 @@ import java.util.List;
 public class UsersViewController {
 
     private final UserRepository userRepository;
+    private final SessionsHandler sessionsHandler;
 
    @GetMapping("")
     public String showUsers(Model model) {
+       if(sessionsHandler.isAnonymous()) {
+           return "redirect:/login";
+       }
        List<MyUser> myUsers = userRepository.findAll();
        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
        model.addAttribute("user",principal.getUsername());

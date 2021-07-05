@@ -25,4 +25,6 @@ public interface SessionsHandler {
     void removeChartFromAnonymousUser(Long id);
 
     boolean isAnonymous();
+
+    void updateUser(MyUser save);
 }

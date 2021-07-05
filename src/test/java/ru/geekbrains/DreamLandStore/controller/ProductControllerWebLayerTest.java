@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.geekbrains.DreamLandStore.model.entry.MyUser;
 import ru.geekbrains.DreamLandStore.model.entry.Product;
@@ -15,14 +16,15 @@ import ru.geekbrains.DreamLandStore.model.repository.ProductRepository;
 import ru.geekbrains.DreamLandStore.model.repository.UserRepository;
 import ru.geekbrains.DreamLandStore.serviseImpl.sessionService.SessionsHandler;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -86,13 +88,9 @@ class ProductControllerWebLayerTest {
 
     @Test
     void addProdPost() throws Exception {
-        Product product = new Product();
-        ObjectMapper objectMapper = new ObjectMapper();
+        Product product = new Product(1L,"Test", BigDecimal.ONE);
         when(productRepository.save(product)).thenReturn(null);
-        mockMvc.perform(post("/product/addprod")
-                .content(objectMapper.writeValueAsString(product))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
+        mockMvc.perform(post("/product/addprod"))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -112,5 +110,16 @@ class ProductControllerWebLayerTest {
                 .andExpect(status().isInternalServerError())
         .andExpect(content().string("Sorry some Error"));
     }
+
+    @Test
+    void addChart() throws Exception {
+        when(productRepository.findById(1L)).thenReturn(Optional.of(new Product()));
+        when(sessionsHandler.getMyUser()).thenReturn(new MyUser());
+        mockMvc.perform(get("/product/addChart/1"))
+                .andDo(print())
+                .andExpect(status().isMovedTemporarily())
+                .andExpect(redirectedUrl("/product"));
+    }
+
 
 }

@@ -5,20 +5,15 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.junit4.SpringRunner;
 import ru.geekbrains.DreamLandStore.model.entry.MyUser;
-import ru.geekbrains.DreamLandStore.model.entry.Role;
-import ru.geekbrains.DreamLandStore.model.repository.RoleRepository;
-import ru.geekbrains.DreamLandStore.model.repository.UserRepository;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@Sql({"/drop.sql","/schema.sql","/data.sql"})
+@Sql({"/dropTest.sql", "/schemaTest.sql", "/dataTest.sql"})
 class UserRepositoryTest {
 
     @Autowired
@@ -27,7 +22,7 @@ class UserRepositoryTest {
     @Test
     void findByUserNameTest() {
         MyUser myUserExpected = new MyUser(2L,"andrey","$2y$12$n7gF2VeEz4ST9MjvdroaBOVClYYO35naUzdr.iHW14Ll42r/JccS.",
-                "Andrey", "Zaitsev", "2@2.ru",new ArrayList<>());
+                "Andrey", "Zaitsev", "2@2.ru", null,new ArrayList<>());
         MyUser andreyActual = userRepository.findOneByUsername("andrey");
         assertEquals(myUserExpected, andreyActual);
     }
@@ -45,7 +40,7 @@ class UserRepositoryTest {
     @Test
     void saveTest() {
         MyUser myUserExpected = new MyUser(3L,"newUser","testPassword",
-                "Andrey", "Zaitsev", "3@3.ru",new ArrayList<>());
+                "Andrey", "Zaitsev", "3@3.ru", "null" ,new ArrayList<>());
         MyUser newUserActual = userRepository.save(myUserExpected);
         assertEquals(myUserExpected,newUserActual);
     }
@@ -58,5 +53,17 @@ class UserRepositoryTest {
                 ()->{ userRepository.save(myUserExpected);
                 });
     }
+
+    @Test
+    void updateTest() {
+        MyUser myUserExpected = new MyUser("newUser", "testPassword",
+                "Andrey", "Zaitsev", "3@3.ru", null);
+        MyUser newUserActual = userRepository.save(myUserExpected);
+        myUserExpected.setAddress("Novosibirsk");
+        myUserExpected.setId(newUserActual.getId());
+        newUserActual = userRepository.save(myUserExpected);
+        assertEquals(myUserExpected, newUserActual);
+    }
+
 
 }

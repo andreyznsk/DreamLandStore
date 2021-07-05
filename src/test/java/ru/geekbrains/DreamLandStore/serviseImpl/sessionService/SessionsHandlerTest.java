@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest
-@Sql({"/drop.sql", "/schema.sql", "/data.sql"})
+@Sql({"/dropTest.sql", "/schemaTest.sql", "/dataTest.sql"})
 class SessionsHandlerTest {
 
     @Autowired
@@ -26,7 +26,7 @@ class SessionsHandlerTest {
     @Test
     void setMyUserByUser() {
         MyUser myUserExpected = new MyUser(2L, "andrey", "$2y$12$n7gF2VeEz4ST9MjvdroaBOVClYYO35naUzdr.iHW14Ll42r/JccS.",
-                "Andrey", "Zaitsev", "2@2.ru", new ArrayList<>());
+                "Andrey", "Zaitsev", "2@2.ru", null,  new ArrayList<>());
         sessionsHandler.setMyUserByUser(new User("andrey", "andrey", new ArrayList<>()));
         MyUser myUserActual = sessionsHandler.getMyUser();
         assertEquals(myUserExpected, myUserActual);
@@ -92,7 +92,7 @@ class SessionsHandlerTest {
     @Test
     void getMyUser() {//TODO
         MyUser myUserExpected = new MyUser(1L, "admin", "$2y$12$n7gF2VeEz4ST9MjvdroaBOVClYYO35naUzdr.iHW14Ll42r/JccS.",
-                "Andrey", "Zaitsev", "1@1.ru", new ArrayList<>());
+                "Andrey", "Zaitsev", "1@1.ru", null, new ArrayList<>());
         sessionsHandler.setMyUserByUser(new User("admin", "[PROTECTED]", new ArrayList<>()));
         MyUser myUserActual = sessionsHandler.getMyUser();
         myUserActual.setRoles(new ArrayList<>());
