@@ -7,7 +7,7 @@ import ru.geekbrains.DreamLandStore.model.entry.MyUser;
 import javax.sql.RowSet;
 import java.util.List;
 
-public interface SessionUser {
+public interface SessionsHandler {
     void setMyUserByUser(User user);
 
     void setAnonymousUser();
@@ -23,4 +23,6 @@ public interface SessionUser {
     MyUser getMyUser();
 
     void removeChartFromAnonymousUser(Long id);
+
+    boolean isAnonymous();
 }

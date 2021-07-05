@@ -1,26 +1,22 @@
 package ru.geekbrains.DreamLandStore.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.jmx.export.annotation.ManagedAttribute;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.geekbrains.DreamLandStore.model.entry.MyUser;
 import ru.geekbrains.DreamLandStore.model.entry.Product;
 import ru.geekbrains.DreamLandStore.model.repository.ChartRepository;
 import ru.geekbrains.DreamLandStore.model.repository.ProductRepository;
 import ru.geekbrains.DreamLandStore.model.repository.UserRepository;
-import ru.geekbrains.DreamLandStore.serviseImpl.sessionService.SessionUser;
+import ru.geekbrains.DreamLandStore.serviseImpl.sessionService.SessionsHandler;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -45,11 +41,11 @@ class ProductControllerWebLayerTest {
     private UserRepository userRepository;
 
     @MockBean
-    private SessionUser sessionUser;
+    private SessionsHandler sessionsHandler;
 
     @Test
     void index() throws Exception {
-        when(sessionUser.getMyUser()).thenReturn(new MyUser());
+        when(sessionsHandler.getMyUser()).thenReturn(new MyUser());
         mockMvc.perform(get("/product/chart"))
                 .andDo(print())
                 .andExpect(status().isOk());

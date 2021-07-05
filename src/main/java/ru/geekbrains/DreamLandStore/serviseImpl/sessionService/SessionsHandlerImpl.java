@@ -24,7 +24,7 @@ import java.util.List;
 )
 @Data
 @RequiredArgsConstructor
-public class SessionUserImpl implements SessionUser {
+public class SessionsHandlerImpl implements SessionsHandler {
 
     private final UserRepository userRepository;
     private final ChartRepository chartRepository;
@@ -32,9 +32,11 @@ public class SessionUserImpl implements SessionUser {
     private MyUser myUser;
     private List<Chart> tempChartList = new LinkedList<>();
     private Long localChartID = 0L;
+    private boolean isAnonymous = true;
 
     @Override
     public void setMyUserByUser(User user) {
+        this.isAnonymous = false;
         this.myUser = userRepository.findOneByUsername(user.getUsername());
         if(tempChartList.size()!=0) {
             for (Chart chart : tempChartList) {
@@ -83,6 +85,7 @@ public class SessionUserImpl implements SessionUser {
         return tempTotalPrice;
     }
 
+    @Override
     public void removeChartFromAnonymousUser(Long id) {
         tempChartList.removeIf(chart -> chart.getId().equals(id));
     }
@@ -91,4 +94,6 @@ public class SessionUserImpl implements SessionUser {
     public void deleteAllFromTmpChartList() {
         this.tempChartList.clear();
     }
+
+
 }
