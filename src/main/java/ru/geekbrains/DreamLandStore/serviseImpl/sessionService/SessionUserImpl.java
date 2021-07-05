@@ -1,4 +1,4 @@
-package ru.geekbrains.DreamLandStore.model.sessionEntity;
+package ru.geekbrains.DreamLandStore.serviseImpl.sessionService;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -24,45 +24,49 @@ import java.util.List;
 )
 @Data
 @RequiredArgsConstructor
-public class SessionUser {
+public class SessionUserImpl implements SessionUser {
 
     private final UserRepository userRepository;
     private final ChartRepository chartRepository;
     private final ProductRepository productRepository;
     private MyUser myUser;
-    private List<Chart> tempChart = new LinkedList<>();
-    private Long localID = 0L;
+    private List<Chart> tempChartList = new LinkedList<>();
+    private Long localChartID = 0L;
 
+    @Override
     public void setMyUserByUser(User user) {
         this.myUser = userRepository.findOneByUsername(user.getUsername());
-        if(tempChart.size()!=0) {
-            for (Chart chart : tempChart) {
+        if(tempChartList.size()!=0) {
+            for (Chart chart : tempChartList) {
                 chart.setCustomerId(myUser.getId());
                 chart.setId(null);
-                chartRepository.save(chart);
             }
-            this.tempChart.clear();
+            chartRepository.saveAll(tempChartList);
+            this.tempChartList.clear();
         }
     }
 
 
-    public void setAnonymousUser(int sessionId) {
+    @Override
+    public void setAnonymousUser() {
         this.myUser = new MyUser();
-        this.myUser.setId((long)sessionId);
     }
 
+    @Override
     public void addTempChart(Chart chart) {
-        chart.setId(localID++);
-        this.tempChart.add(chart);
+        chart.setId(this.localChartID++);
+        this.tempChartList.add(chart);
     }
 
+    @Override
     public List<Chart> getCharts() {
         if(myUser.getUsername() != null){
             return chartRepository.findAllByCustomerId(myUser.getId());
         }
-        return tempChart;
+        return tempChartList;
     }
 
+    @Override
     public double getTotalPrice() {
         double tempTotalPrice = 0.0;
         if(myUser.getUsername() != null){
@@ -71,7 +75,7 @@ public class SessionUser {
                 tempTotalPrice += chart.getProduct().getPrice().doubleValue();
             }
         } else {
-            for (Chart chart : tempChart) {
+            for (Chart chart : tempChartList) {
                 tempTotalPrice += chart.getProduct().getPrice().doubleValue();
 
             }
@@ -79,11 +83,12 @@ public class SessionUser {
         return tempTotalPrice;
     }
 
-    public void removeChart(Long id) {
-        tempChart.removeIf(chart -> chart.getId().equals(id));
+    public void removeChartFromAnonymousUser(Long id) {
+        tempChartList.removeIf(chart -> chart.getId().equals(id));
     }
 
-    public void deleteAll() {
-        this.tempChart.clear();
+    @Override
+    public void deleteAllFromTmpChartList() {
+        this.tempChartList.clear();
     }
 }

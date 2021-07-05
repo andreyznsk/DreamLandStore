@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class ExceptionAdvice {
 
     @ExceptionHandler({NullPointerException.class,IllegalArgumentException.class})
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public String notFoundException(RuntimeException e){
         System.out.println("Error! " + e.getMessage());
@@ -44,6 +44,15 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public String allException(Throwable e){
+        System.out.println("Sorry some Error" + e.getMessage());
+        e.printStackTrace();
+        return "Sorry some Error";
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public String allException(DataIntegrityViolationException e){
         System.out.println("Sorry some Error" + e.getMessage());
         e.printStackTrace();
         return "Sorry some Error";

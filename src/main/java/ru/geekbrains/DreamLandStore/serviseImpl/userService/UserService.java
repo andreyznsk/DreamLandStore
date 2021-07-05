@@ -1,4 +1,4 @@
-package ru.geekbrains.DreamLandStore.serviseImpl;
+package ru.geekbrains.DreamLandStore.serviseImpl.userService;
 
 
 

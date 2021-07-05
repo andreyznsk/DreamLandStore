@@ -1,12 +1,16 @@
 package ru.geekbrains.DreamLandStore.model.entry;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "chart")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Chart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
