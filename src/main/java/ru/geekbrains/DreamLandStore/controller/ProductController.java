@@ -89,7 +89,6 @@ public class ProductController {
     @GetMapping("/update/{id}")
     public String updateForm(Model model, @PathVariable Long id){
         Optional<Product> product = productRepository.findById(id);
-        System.out.println(product);
         model.addAttribute("product",product.orElseThrow(NullPointerException::new));
         return "update";
     }
@@ -97,7 +96,6 @@ public class ProductController {
     @PostMapping("/update/{id}")
     public String updateItemForm(Model model, Product product, @PathVariable Long id){
         product.setId(id);
-        System.out.println(product);
         productRepository.save (product);
         model.addAttribute("message", "Обновлено");
         return "redirect:/product";

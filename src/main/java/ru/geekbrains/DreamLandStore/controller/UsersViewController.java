@@ -38,7 +38,6 @@ public class UsersViewController {
        model.addAttribute("myUsers",myUsers);
         model.addAttribute("date", new Date());
        Collection<GrantedAuthority> authorities = principal.getAuthorities();
-       System.out.println(authorities);
        return "viewUsers";
     }
 }

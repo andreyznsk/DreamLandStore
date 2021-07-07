@@ -1,5 +1,6 @@
 package ru.geekbrains.DreamLandStore.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -9,14 +10,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-
+@Slf4j
 public class ExceptionAdvice {
 
     @ExceptionHandler({NullPointerException.class,IllegalArgumentException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public String notFoundException(RuntimeException e){
-        System.out.println("Error! " + e.getMessage());
+        log.error("Error! " + e.getMessage());
         e.printStackTrace();
         return "Not found!!";
     }
@@ -26,7 +27,7 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public String notFoundException(UsernameNotFoundException e){
-        System.out.println("Not found!! " + e.getMessage());
+        log.error("Not found!! " + e.getMessage());
         e.printStackTrace();
         return "Not found!!" + e.getMessage();
     }
@@ -35,7 +36,7 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public String nClassCastException(ClassCastException e){
-        System.out.println("Not found!! " + e.getMessage());
+        log.error("Not found!! " + e.getMessage());
         e.printStackTrace();
         return "Not found!!" + e.getMessage();
     }
@@ -44,7 +45,7 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public String allException(Throwable e){
-        System.out.println("Sorry some Error" + e.getMessage());
+        log.error("Sorry some Error" + e.getMessage());
         e.printStackTrace();
         return "Sorry some Error";
     }
@@ -53,7 +54,7 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public String allException(DataIntegrityViolationException e){
-        System.out.println("Sorry some Error" + e.getMessage());
+        log.error("Sorry some Error" + e.getMessage());
         e.printStackTrace();
         return "Sorry some Error";
     }
