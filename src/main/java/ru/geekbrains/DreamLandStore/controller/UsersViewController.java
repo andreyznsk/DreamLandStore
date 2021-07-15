@@ -2,7 +2,7 @@ package ru.geekbrains.DreamLandStore.controller;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -13,9 +13,6 @@ import ru.geekbrains.DreamLandStore.model.entry.MyUser;
 import ru.geekbrains.DreamLandStore.model.repository.UserRepository;
 import ru.geekbrains.DreamLandStore.serviseImpl.sessionService.SessionsHandler;
 
-import javax.persistence.Column;
-import java.security.Principal;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -28,16 +25,13 @@ public class UsersViewController {
     private final SessionsHandler sessionsHandler;
 
    @GetMapping("")
+   @PreAuthorize(value = "login")
     public String showUsers(Model model) {
-       if(sessionsHandler.isAnonymous()) {
-           return "redirect:/login";
-       }
        List<MyUser> myUsers = userRepository.findAll();
        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
        model.addAttribute("user",principal.getUsername());
        model.addAttribute("myUsers",myUsers);
-        model.addAttribute("date", new Date());
-       Collection<GrantedAuthority> authorities = principal.getAuthorities();
+       model.addAttribute("date", new Date());
        return "viewUsers";
     }
 }

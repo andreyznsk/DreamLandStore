@@ -17,8 +17,7 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public String notFoundException(RuntimeException e){
-        log.error("Error! " + e.getMessage());
-        e.printStackTrace();
+        log.error("Error! " + e.getMessage(), e);
         return "Not found!!";
     }
 
@@ -27,8 +26,7 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public String notFoundException(UsernameNotFoundException e){
-        log.error("Not found!! " + e.getMessage());
-        e.printStackTrace();
+        log.error("Not found!! " + e.getMessage(), e);
         return "Not found!!" + e.getMessage();
     }
 
@@ -36,8 +34,7 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public String nClassCastException(ClassCastException e){
-        log.error("Not found!! " + e.getMessage());
-        e.printStackTrace();
+        log.error("Not found!! " + e.getMessage(), e);
         return "Not found!!" + e.getMessage();
     }
 
@@ -45,8 +42,7 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public String allException(Throwable e){
-        log.error("Sorry some Error" + e.getMessage());
-        e.printStackTrace();
+        log.error("Sorry some Error" + e.getMessage(), e);
         return "Sorry some Error";
     }
 
@@ -54,8 +50,7 @@ public class ExceptionAdvice {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public String allException(DataIntegrityViolationException e){
-        log.error("Sorry some Error" + e.getMessage());
-        e.printStackTrace();
+        log.error("Sorry some Error" + e.getMessage(), e);
         return "Sorry some Error";
     }
 
