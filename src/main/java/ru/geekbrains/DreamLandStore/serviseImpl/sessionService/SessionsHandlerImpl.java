@@ -91,6 +91,11 @@ public class SessionsHandlerImpl implements SessionsHandler {
     }
 
     @Override
+    public void updateUser(MyUser save) {
+        this.myUser = userRepository.findOneByUsername(save.getUsername());
+    }
+
+    @Override
     public void deleteAllFromTmpChartList() {
         this.tempChartList.clear();
     }

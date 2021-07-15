@@ -18,8 +18,8 @@
 
     </div>
     <div class="outer" th:each="myUser: ${myUsers}">
-        <div class="inner" th:text="${myUser.id}">Имя</div>
-        <div class="inner" th:text="${myUser.getUsername()}">Id</div>
+        <div class="inner" th:text="${myUser.id}">Id</div>
+        <div class="inner" th:text="${myUser.getUsername()}">Name</div>
         <div class="inner item" th:text="${myUser.getAuthorities()}">Roles</div>
 
     </div>

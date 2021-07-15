@@ -12,6 +12,7 @@ import ru.geekbrains.DreamLandStore.model.entry.Role;
 import ru.geekbrains.DreamLandStore.model.entry.MyUser;
 import ru.geekbrains.DreamLandStore.model.repository.RoleRepository;
 import ru.geekbrains.DreamLandStore.model.repository.UserRepository;
+import ru.geekbrains.DreamLandStore.serviseImpl.sessionService.SessionsHandler;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -22,6 +23,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final SessionsHandler sessionsHandler;
 
 
     @Override
@@ -38,6 +40,16 @@ public class UserServiceImpl implements UserService {
         myUser.setPassword(bCryptPasswordEncoder.encode(myUser.getPassword()));
         myUser.setRoles(roleRepository.findOneByName("ROLE_CLIENT"));
         userRepository.save(myUser);
+        return true;
+    }
+
+    @Override
+    public boolean updateUser(MyUser myUser) {
+        MyUser myUserTemp = userRepository.findOneByUsername(myUser.getUsername());
+        myUser.setPassword(myUserTemp.getPassword());
+        myUser.setRoles(myUser.getRoles());
+        MyUser save = userRepository.save(myUser);
+        sessionsHandler.updateUser(save);
         return true;
     }
 

@@ -38,3 +38,8 @@ insert into products(price, name) VALUES
 
 insert into chart (customer_id,prod_id) VALUES (1,1),
                                                 (1,2);
+
+insert into ORDERS (CUSTOMER_ID, DELIVERY_ADDRESS, IS_ORDERED, IS_PAID, IS_DELIVERED, ORDER_DATE, TOTAL_PRICE)
+VALUES (1,'Nsk',false,false,false,'2021-01-01',10.1);
+
+insert into ORDER_DETAILS (ORDER_ID, PROD_ID) VALUES ( 1,1);

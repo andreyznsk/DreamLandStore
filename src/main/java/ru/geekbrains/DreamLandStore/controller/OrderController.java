@@ -20,6 +20,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Controller
@@ -31,8 +32,8 @@ public class OrderController {
     private final ChartRepository chartRepository;
     private final OrderDetailRepository orderDetailRepository;
 
-    @GetMapping("")
-    public String chart(){
+    @GetMapping("/processOrder")
+    public String viewOrders(){
         if (sessionsHandler.isAnonymous()) {
             return "redirect:/login";
         }
@@ -69,8 +70,6 @@ public class OrderController {
         model.addAttribute("orders", orders);
         model.addAttribute("user", sessionsHandler.getMyUser().getUsername());
         model.addAttribute("date",new Date());
-        double totalPrice = sessionsHandler.getTotalPrice();
-        model.addAttribute("totalPrice", totalPrice);
         return "orders_view";
     }
 
@@ -81,19 +80,18 @@ public class OrderController {
         model.addAttribute("orders", orders);
         model.addAttribute("user", sessionsHandler.getMyUser().getUsername());
         model.addAttribute("date",new Date());
-        double totalPrice = sessionsHandler.getTotalPrice();
-        model.addAttribute("totalPrice", totalPrice);
         return "orders_view";
     }
 
     @GetMapping("/update/{id}")
     public String viewOrderDetail(Model model,@PathVariable Long id){
         List<OrderDetails> orderDetailsList = orderDetailRepository.findAllByOrderId(id);
+        Optional<Order> byId = orderRepository.findById(id);
         if(orderDetailsList.size()>0){
             model.addAttribute("user", sessionsHandler.getMyUser().getUsername());
-            model.addAttribute("orderNumber", orderDetailsList.get(0).getOrderId());
+            model.addAttribute("orderNumber", byId.orElseThrow(NullPointerException::new).getOrderId());
             model.addAttribute("orderDetails", orderDetailsList);
-            model.addAttribute("totalPrice",orderDetailsList.get(0).getOrder().getTotalPrice());
+            model.addAttribute("totalPrice",byId.orElseThrow(NullPointerException::new).getTotalPrice());
             model.addAttribute("date",new Date());
         }
 

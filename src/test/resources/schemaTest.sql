@@ -1,8 +1,10 @@
-drop table if exists USERS cascade;
+/*drop table if exists USERS cascade;
 drop table if exists  USERS_ROLES cascade;
 drop table if exists  ROLE cascade;
 drop table if exists  PRODUCTS cascade;
 DROP table if exists  CHART cascade;
+DROP TABLE  if exists  ORDERS cascade;
+DROP TABLE  if exists  ORDER_DETAILS cascade;*/
 
 CREATE TABLE users (
                        id         IDENTITY NOT NULL,
@@ -11,6 +13,7 @@ CREATE TABLE users (
                        first_name VARCHAR(100) NOT NULL,
                        last_name  VARCHAR(100) NOT NULL,
                        email      VARCHAR(100),
+                       address VARCHAR(50),
                        PRIMARY KEY (id)
 );
 
@@ -48,4 +51,24 @@ CREATE TABLE chart (
                        FOREIGN KEY (customer_id) REFERENCES USERS(id),
                        FOREIGN KEY (prod_id) REFERENCES PRODUCTS(prod_id)
 
+);
+
+CREATE TABLE orders (
+                        order_id         IDENTITY NOT NULL,
+                        customer_id   INT NOT NULL DEFAULT '-1',
+                        delivery_address VARCHAR(30),
+                        is_ordered BOOLEAN DEFAULT false,
+                        is_paid BOOLEAN DEFAULT false,
+                        is_delivered  BOOLEAN DEFAULT false,
+                        order_date DATE NOT NULL ,
+                        total_price NUMERIC(10,2),
+                        FOREIGN KEY (customer_id) REFERENCES USERS(id)
+);
+
+CREATE TABLE order_details (
+                               id IDENTITY NOT NULL,
+                               order_id INT,
+                               prod_id INT,
+                               FOREIGN KEY (order_id) references ORDERS(order_id),
+                               FOREIGN KEY (prod_id) REFERENCES PRODUCTS(prod_id)
 );

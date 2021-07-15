@@ -19,6 +19,9 @@
       <form class="form" th:action="@{/product/order/view}" method="get">
         <button type="submit">Показать заказы</button>
       </form>
+      <form class="form" th:action="@{/userDetails/viewDetails}" method="get">
+        <button type="submit">Инофрмация пользователя</button>
+      </form>
     </div>
     <h1 class="title" th:text="#{welcome.message (${user ?: 'unknown'})}">Hello, people!</h1>
   </div>

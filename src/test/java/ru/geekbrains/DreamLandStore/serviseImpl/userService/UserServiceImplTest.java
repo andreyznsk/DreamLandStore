@@ -1,6 +1,5 @@
 package ru.geekbrains.DreamLandStore.serviseImpl.userService;
 
-import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,26 +9,28 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.jdbc.Sql;
 import ru.geekbrains.DreamLandStore.model.entry.MyUser;
-import ru.geekbrains.DreamLandStore.model.entry.Role;
+import ru.geekbrains.DreamLandStore.model.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-@Sql({"/drop.sql","/schema.sql","/data.sql"})
+@Sql({"/dropTest.sql", "/schemaTest.sql", "/dataTest.sql"})
 class UserServiceImplTest {
 
     @Autowired
     private UserServiceImpl userService;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Test
     void findByUserName() {
         MyUser myUserExpected = new MyUser(2L,"andrey","$2y$12$n7gF2VeEz4ST9MjvdroaBOVClYYO35naUzdr.iHW14Ll42r/JccS.",
-            "Andrey", "Zaitsev", "2@2.ru",new ArrayList<>());
+            "Andrey", "Zaitsev", "2@2.ru",null,new ArrayList<>());
         MyUser myUserActual = userService.findByUserName("andrey");
         assertEquals(myUserExpected,myUserActual);
     }
@@ -51,6 +52,15 @@ class UserServiceImplTest {
         UserDetails myUserExpected = new User("admin","[PROTECTED]",
                 true,true,true,true,roles);
         UserDetails myUserActual = userService.loadUserByUsername("admin");
+        assertEquals(myUserExpected,myUserActual);
+    }
+
+    @Test
+    void update() {
+        MyUser myUserExpected = new MyUser(2L,"andrey","",
+                "Andrey", "Zaitsev", "2@2.ru","Russia",new ArrayList<>());
+        userService.updateUser(myUserExpected);
+        MyUser myUserActual = userRepository.findOneByUsername("andrey");
         assertEquals(myUserExpected,myUserActual);
     }
 }

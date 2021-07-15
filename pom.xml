@@ -91,6 +91,15 @@
 		</dependency>
 	</dependencies>
 
+	<profiles>
+		<profile>
+			<id>no-tests</id>
+			<properties>
+				<maven.test.skip>true</maven.test.skip>
+			</properties>
+		</profile>
+	</profiles>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -118,6 +127,20 @@
 						<schema>dreamland</schema>
 					</schemas>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-help-plugin</artifactId>
+				<version>3.2.0</version>
+				<executions>
+					<execution>
+						<id>show-profiles</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>active-profiles</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 
 		</plugins>

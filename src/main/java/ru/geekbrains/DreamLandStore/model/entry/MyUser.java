@@ -3,12 +3,12 @@ package ru.geekbrains.DreamLandStore.model.entry;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -38,6 +38,10 @@ public class MyUser implements UserDetails {
     @Column(name = "email")
     private String email;
 
+    @Column(name = "address")
+    private String address;
+
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -50,6 +54,8 @@ public class MyUser implements UserDetails {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.address = null;
+        this.roles = new ArrayList<>();
     }
 
     public MyUser(String username, String password, String firstName, String lastName, String email,
